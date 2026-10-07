@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>บันทึกรัก — Our First Anniversary</title>
+<style>
+@font-face{font-family:"Mali";src:url("assets/fonts/Mali-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+:root{--paper:#fffaf1;--ink:#51443f;--muted:#8a7770;--rose:#854651;--line:#e5d9cc;--blush:#efe0db}
+*{box-sizing:border-box} [hidden]{display:none!important}
+body{margin:0;background:#eee7dc;background-image:radial-gradient(#b6a18b22 .7px,transparent .7px);background-size:5px 5px;color:var(--ink);font-family:"Mali","Leelawadee UI",cursive;padding:32px 20px;line-height:1.8}
+button,input{font:inherit} button,a{touch-action:manipulation} button{cursor:pointer} button:disabled{cursor:default;opacity:.35}
+button:focus-visible,a:focus-visible{outline:3px solid #b47883;outline-offset:4px}
+[tabindex="-1"]:focus{outline:none}
+.eyebrow{font-family:Georgia,serif;font-size:11px;letter-spacing:3px;color:var(--rose)}
+.login-screen{min-height:calc(100dvh - 64px);display:grid;place-items:center}
+.login-card{position:relative;width:100%;max-width:410px;background:var(--paper);border:1px solid var(--line);border-radius:3px 16px 16px 3px;padding:48px 32px 38px;box-shadow:5px 5px 0 #e0d4c5,12px 18px 50px #64514016}
+.login-card:before{content:"";position:absolute;top:0;bottom:0;left:10px;border-left:1px solid var(--line)}
+.login-caption{text-align:center;margin:0 0 32px;line-height:2}
+.login-form label{display:block;font-size:14px;margin-bottom:8px}
+.password-field{display:flex;background:#fffdf8;border:1px solid #cdbbae;border-radius:6px;overflow:hidden}
+.password-field:focus-within{outline:2px solid #d9b7bd;outline-offset:2px}
+.password-field input{width:100%;min-width:0;border:0;outline:0;padding:12px;background:transparent;color:var(--ink);font-size:16px}
+.password-toggle{border:0;background:transparent;color:var(--rose);padding:10px 12px;font-size:13px}
+.login-error{min-height:24px;margin:8px 0 14px;color:#a1374a;font-size:13px}
+.primary{border:1px solid var(--rose);border-radius:6px;background:var(--rose);color:#fffaf1;padding:11px 20px}
+.login-submit{width:100%}
+.wrap{max-width:1040px;margin:auto}
+.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:30px}
+.topbar p{margin:0} .text-button{border:0;background:transparent;color:var(--muted);font-size:12px;text-decoration:underline;text-underline-offset:4px;padding:8px}
+.cover-heading{text-align:center;margin-bottom:28px}
+h1{font-family:"Mali","Leelawadee UI",cursive;font-weight:400;font-size:clamp(34px,5vw,54px);line-height:1.5;margin:6px 0}
+.cover-heading p{color:var(--muted);font-size:14px;margin:0}
+.tabs{display:flex;justify-content:center;gap:8px;margin:26px 0 0}
+.tab{border:1px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0;padding:10px 20px;background:#e5dbcd;color:var(--muted);font-size:13px}
+.tab[aria-selected="true"]{background:var(--paper);color:var(--rose);position:relative;z-index:2}
+.book{position:relative;background:var(--paper);border:1px solid #d8c7b5;border-radius:5px 12px 12px 5px;box-shadow:4px 5px 0 #e0d4c4,6px 8px 0 #d2c1ad,0 20px 50px #68513b16;overflow:hidden}
+.diary-layout{display:grid;grid-template-columns:235px 1fr;min-height:515px}
+.contents{padding:36px 24px;background:#f6efe4;border-right:3px double #d9c8b7;box-shadow:inset -12px 0 15px -15px #84705c55}
+.contents h2{font-size:15px;font-weight:400;margin:0 0 24px}
+.entry-link{display:block;width:100%;text-align:left;background:transparent;border:0;border-left:2px solid transparent;padding:10px 12px;margin:0 0 10px;color:var(--muted);font-size:13px}
+.entry-link span{display:block;font-family:Georgia,serif;font-size:11px;letter-spacing:1px;margin-bottom:3px}
+.entry-link[aria-current="page"]{color:var(--rose);border-color:var(--rose);background:#eadcd655}
+.margin-note{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);font-family:Georgia,serif;font-style:italic;color:#a18b7c;font-size:13px}
+.diary-page{padding:40px 48px 24px;position:relative;display:flex;flex-direction:column;min-width:0;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 35px,#c6b7a52e 35px,#c6b7a52e 36px);background-position:0 16px;box-shadow:inset 14px 0 20px -20px #7d6650}
+.diary-page:before{content:"";position:absolute;top:20px;bottom:22px;left:27px;border-left:1px solid #c7929638;pointer-events:none}
+.scrapbook{display:flex;align-items:flex-start;justify-content:center;flex-wrap:wrap;padding:48px 12px 50px;gap:40px;min-height:435px}
+.anniversary-letter{width:100%;max-width:520px;margin:0 auto;padding:12px 0 36px;font-size:16px;line-height:36px;overflow-wrap:break-word}
+.anniversary-letter p{margin:0 0 36px}
+.anniversary-letter p:first-child{color:var(--rose);font-size:19px;margin-bottom:36px}
+.anniversary-letter p:last-child{margin-bottom:0;color:var(--rose)}
+.love-reasons{margin:0 0 36px;padding-left:32px;line-height:36px}
+.love-reasons li{padding-left:8px;margin:0}
+.love-reasons li::marker{color:var(--rose);font-family:Georgia,serif;font-style:italic}
+.diary-page[data-kind="letter"] .sticker-heart{font-size:24px;top:12px;right:12px}
+.diary-page[data-kind="letter"] .sticker-pair{font-size:23px;bottom:5px;left:9px}
+.diary-page[data-kind="letter"] .sticker-flower{font-size:22px;bottom:8px;right:10px}
+.diary-page[data-kind="letter"] .sticker-star{font-size:18px;left:7px}
+.panel{background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 35px,#c6b7a521 35px,#c6b7a521 36px)}
+.page-nav{border-top-style:double!important;border-top-width:3px!important;background:var(--paper)}
+.cover-heading:after{content:"♡";display:block;max-width:180px;margin:12px auto 0;color:#b58c90;font-family:Georgia,serif;line-height:16px;border-top:1px solid #d8c5b5;border-bottom:1px solid #d8c5b5;padding:6px 0}
+@media(max-width:650px){.diary-page:before{left:12px}.anniversary-letter{font-size:15px}.anniversary-letter p:first-child{font-size:17px}.love-reasons{padding-left:26px}.love-reasons li{padding-left:4px}}
+.scrap-photo{position:relative;flex:0 1 calc(50% - 20px);max-width:220px;min-width:0;border:1px solid #e3d7c7;background:#fffdf8;padding:9px 9px 24px;box-shadow:3px 8px 14px #58432b20;transform:rotate(-5deg);margin:0 0 20px;color:var(--muted)}
+.scrap-photo:nth-child(even){transform:rotate(5deg);margin:42px 0 8px;z-index:1}
+.scrap-photo:before{content:"";position:absolute;top:-12px;left:calc(50% - 35px);width:70px;height:25px;background:#d7bda477;border-left:1px dashed #c2a68c88;border-right:1px dashed #c2a68c88;transform:rotate(4deg);z-index:2;pointer-events:none}
+.scrap-photo:nth-child(even):before{background:#c8b8b077;transform:rotate(-8deg)}
+.scrap-photo img{display:block;width:100%;height:auto;max-height:300px;object-fit:contain}
+.page-stickers{position:absolute;inset:0 0 78px;pointer-events:none;user-select:none;overflow:hidden}
+.sticker{position:absolute;font-family:Georgia,serif;line-height:1;color:#b66d7c}
+.sticker-heart{top:14px;right:24px;font-size:46px;transform:rotate(15deg);text-shadow:2px 3px 0 #ead4ce}
+.sticker-pair{bottom:20px;left:22px;font-size:32px;transform:rotate(-14deg);letter-spacing:-7px;color:#c18e91}
+.sticker-star{top:44%;left:12px;font-size:26px;color:#c0a078;transform:rotate(12deg)}
+.sticker-flower{bottom:28px;right:25px;font-size:35px;color:#b3949a;transform:rotate(20deg)}
+.diary-page[data-page="1"] .sticker-heart,.diary-page[data-page="3"] .sticker-heart{right:auto;left:25px;transform:rotate(-15deg)}
+.diary-page[data-page="2"] .sticker-pair{left:45%;bottom:12px}
+@media(max-width:420px){.scrapbook{padding:48px 0 42px;gap:30px;min-height:380px}.scrap-photo{padding:6px 6px 18px;flex-basis:calc(50% - 15px)}.scrap-photo:nth-child(even){margin-top:42px}.scrap-photo:before{width:48px;left:calc(50% - 24px)}.sticker-heart{font-size:35px}.sticker-pair{font-size:27px}.sticker-star{font-size:20px;left:2px}}
+.page-nav{margin-top:auto;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.page-nav button{border:0;background:transparent;color:var(--rose);padding:6px 0;font-size:13px}
+.page-number{color:var(--muted);font-family:Georgia,serif;font-size:12px;letter-spacing:2px}
+.panel{padding:36px 42px;min-height:515px}.panel h2{font-weight:400;font-size:26px;margin:0 0 6px}.panel-intro{color:var(--muted);font-size:13px;margin:0 0 24px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+.polaroid{border:1px solid #e4d8ca;background:#fffdf9;padding:9px 9px 20px;box-shadow:2px 6px 12px #5b463012;transform:rotate(-2deg)}
+.polaroid:nth-child(even){transform:rotate(2deg)}.polaroid img{display:block;width:100%;height:180px;object-fit:cover}.polaroid span{display:block;color:var(--muted);font-size:12px;margin-top:10px;font-family:Georgia,serif}
+.empty-album{border:1px dashed #d3bfaf;border-radius:4px;padding:50px 20px;text-align:center;color:var(--muted);grid-column:1/-1;font-size:14px}
+.upload-label{display:inline-block;cursor:pointer;font-size:13px}.upload-label input{position:absolute;width:1px;height:1px;opacity:0}.upload-label:focus-within{outline:3px solid #b47883;outline-offset:4px}
+.song{display:flex;align-items:center;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}.song-number{font-family:Georgia,serif;font-style:italic;font-size:24px;color:#b79a88}.song div{flex:1}.song strong{font-size:15px;font-weight:400}.song small{display:block;color:var(--muted);font-size:12px}.song a{color:var(--rose);font-size:12px;text-underline-offset:4px}
+.little-note{margin-top:32px;padding:22px;background:#efe2d466;max-width:460px;border-left:2px solid #c39a9e;font-size:14px}.little-note p{margin:0 0 10px}.little-note button{border:0;background:transparent;color:var(--rose);font-size:12px;padding:0}
+.footer{text-align:center;color:#9b8678;font-family:Georgia,serif;font-size:11px;letter-spacing:2px;margin:28px 0 0}
+.modal{border:1px solid var(--line);background:var(--paper);padding:14px;border-radius:8px;max-width:min(900px,94vw);color:var(--ink)}.modal::backdrop{background:#302922b8}.modal img{display:block;width:100%;height:65dvh;object-fit:contain}.modal-controls{display:flex;justify-content:space-between;gap:12px;margin-top:12px}.modal button{background:transparent;border:1px solid var(--line);border-radius:4px;color:var(--rose);padding:5px 12px}
+@media(max-width:650px){body{padding:22px 14px}.topbar{margin-bottom:20px}.topbar .eyebrow{font-size:9px;letter-spacing:1.5px}.cover-heading{margin-bottom:20px}.diary-layout{grid-template-columns:1fr}.contents{padding:16px;border-right:0;border-bottom:1px solid var(--line)}.contents h2,.margin-note{display:none}.entry-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}.entry-link{padding:6px 9px;margin:0;font-size:12px}.entry-link span{font-size:10px}.diary-page{padding:28px 24px 20px;min-height:445px}.diary-page h2{font-size:24px}.tabs{gap:5px}.tab{padding:9px 14px;font-size:12px}.panel{padding:26px 22px}.gallery-grid{grid-template-columns:repeat(2,1fr);gap:14px}.polaroid img{height:140px}.login-card{padding:40px 26px 30px}.song{gap:12px}}
+.anniversary-letter{font-size:19px}
+.anniversary-letter p:first-child{font-size:21px}
+.little-note{font-size:18px;line-height:2;transform:rotate(-1deg);border-radius:2px;box-shadow:2px 5px 10px #58432b0d}
+.little-note p{margin-bottom:18px}
+.love-reasons li::marker{font-family:"Mali",cursive;font-style:normal}
+@media(max-width:650px){.anniversary-letter{font-size:17px}.anniversary-letter p:first-child{font-size:19px}.little-note{font-size:17px}}
+.book-shell{position:relative;margin-top:68px;--page-height:650px;--contents-height:0px}
+.tabs{position:absolute;top:-46px;right:24px;z-index:4;gap:12px;margin:0;align-items:flex-start}
+.tab{width:112px;min-height:91px;padding:12px 8px 30px;border:0;border-radius:2px 2px 0 0;clip-path:polygon(0 0,100% 0,100% 100%,50% 83%,0 100%);background:#d7b8ad;color:#60443d;font-size:12px;box-shadow:inset 0 0 0 1px #89635418;transition:transform .25s,background .25s}
+.tab:nth-child(2){background:#c7d1bc;color:#455343}.tab:nth-child(3){background:#dac5a2;color:#675537}
+.tab[aria-selected="true"]{background:#ab6d79;color:#fffaf1;transform:translateY(9px);z-index:2}
+.tab:focus-visible{outline:none;box-shadow:inset 0 0 0 3px #644348}
+.book{height:calc(var(--page-height) + var(--contents-height));isolation:isolate}
+#diaryPanel{height:100%;perspective:1800px}
+.diary-layout{height:100%;min-height:0;grid-template-rows:minmax(0,1fr)}
+.contents{min-height:0;overflow:auto}
+.diary-page{height:var(--page-height);min-height:0;overflow:hidden}
+.anniversary-letter{flex-shrink:0}
+.page-nav{flex-shrink:0;position:relative;z-index:2}
+.scrapbook{flex:1;min-height:0;align-items:center;flex-wrap:nowrap;gap:36px;padding:44px 12px 48px}
+.scrap-photo{flex:0 1 calc(50% - 18px);max-width:240px;margin:0;transform:translateY(-20px) rotate(-5deg)}
+.scrap-photo:nth-child(even){margin:0;transform:translateY(24px) rotate(5deg)}
+.scrap-photo:only-child{flex-basis:62%;max-width:290px;transform:rotate(-4deg)}
+.scrap-photo img{width:100%;height:min(340px,calc(var(--page-height) - 245px));max-height:none;object-fit:contain}
+.panel{height:100%;min-height:0;overflow:auto;overscroll-behavior:contain;padding-top:60px}
+.page-leaf{position:absolute!important;inset:0;z-index:8;margin:0;pointer-events:none;transform-origin:left center;backface-visibility:hidden;box-shadow:14px 0 30px #60472b25}
+.diary-page{perspective:1600px}
+@media(max-width:650px){.book-shell{margin-top:64px}.tabs{right:12px;left:12px;justify-content:flex-end;gap:8px}.tab{width:30%;max-width:110px;font-size:11px;min-height:84px;padding:10px 5px 27px}.diary-layout{grid-template-rows:auto minmax(0,1fr)}.contents{padding:12px 16px;overflow:visible}.entry-list{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.entry-link{padding:6px 2px;text-align:center;font-size:11px}.scrapbook{gap:28px;padding:38px 0 44px}.scrap-photo{flex-basis:calc(50% - 14px);padding:6px 6px 18px}.scrap-photo:only-child{flex-basis:70%;max-width:260px}.scrap-photo img{height:min(320px,calc(var(--page-height) - 205px))}.panel{padding-top:56px}}
+@media(prefers-reduced-motion:reduce){.tab{transition:none}}
+.page-stage{position:relative;min-width:0;min-height:0;perspective:2200px;z-index:3}
+.page-stage>.diary-page{perspective:none}
+.turning-sheet{position:absolute;inset:0;z-index:10;pointer-events:none;transform-origin:0 50%;transform-style:preserve-3d;will-change:transform}
+.sheet-front,.sheet-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.sheet-front.diary-page{height:100%;background-color:var(--paper);box-shadow:inset -16px 0 26px -20px #60472b66}
+.sheet-back{transform:rotateY(180deg);background-color:var(--paper);background-image:repeating-linear-gradient(transparent 0,transparent 35px,#c6b7a52e 35px,#c6b7a52e 36px);box-shadow:inset 16px 0 30px -20px #60472b66}
+.sheet-back:after{content:'♡';position:absolute;bottom:36px;right:30px;color:#c39899;font:32px Georgia,serif}
+.music-toggle{position:fixed;right:18px;bottom:18px;z-index:40;background:#854651;color:#fffaf1;border:1px solid #683842;border-radius:30px;padding:12px 20px;box-shadow:0 5px 20px #4d343025;font-size:13px}
+.music-device{position:fixed;right:18px;bottom:18px;z-index:45;width:280px;max-height:calc(100dvh - 36px);overflow:auto;border:1px solid #baa39c;border-radius:26px;padding:16px;background:linear-gradient(145deg,#f1e6e1,#d7c4bd);box-shadow:inset 2px 2px 2px #fffaf8bb,inset -2px -2px 3px #9f87785c,0 14px 40px #46342d30;font-family:"Mali",cursive}
+.device-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font:10px Georgia,serif;letter-spacing:2px;color:#77545b}
+.device-close{border:0;background:transparent;color:#77545b;font-size:20px;padding:2px 6px;line-height:1}
+.device-screen{background:#302c2a;border:4px solid #6e625c;border-radius:9px;padding:9px;color:#fff4e8;box-shadow:inset 0 2px 10px #0005}
+.device-track{margin:0;font-size:14px;line-height:1.6}.device-artist{margin:3px 0 9px;font-size:10px;color:#d3bbb0}
+.youtube-screen{width:100%;height:208px;min-width:200px;background:#171514}.youtube-screen iframe{display:block;width:100%;height:208px;border:0}
+.youtube-placeholder{display:grid;place-items:center;width:100%;height:100%;color:#d4b5ba;font:38px Georgia,serif}
+.device-progress{width:100%;accent-color:#be8b96;margin:12px 0 0}.device-times{display:flex;justify-content:space-between;font:10px Georgia,serif;color:#ccbbae}
+.device-status{font-size:11px;margin:10px 0;line-height:1.7;color:#78585b;min-height:20px}
+.device-controls{display:flex;justify-content:center;align-items:center;gap:14px;margin:8px 0 12px}
+.device-controls button{border:1px solid #bda7a0;border-radius:50%;width:44px;height:44px;background:linear-gradient(#f8efeb,#decdc5);box-shadow:0 3px 6px #6c514418;color:#76505b;font-size:20px;font-family:system-ui,sans-serif}
+.device-controls .device-play{width:60px;height:60px;font-size:24px;border:3px solid #b7959c}
+.device-volume{display:flex;align-items:center;gap:10px;font-size:11px}.device-volume input{min-width:0;width:100%;accent-color:#956371}
+.device-link{display:block;text-align:center;color:#78585b;font-size:10px;margin-top:10px;text-underline-offset:3px}
+.song-choice{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;display:flex;align-items:center;gap:18px;padding:16px 0;text-align:left;color:var(--ink)}
+.song-choice span:nth-child(2){flex:1}.song-choice strong{display:block;font-size:17px;font-weight:400}.song-choice small{display:block;font-size:12px;color:var(--muted)}.song-choice[aria-current="true"]{color:var(--rose)}
+.song-choice .song-action{font-size:13px;color:var(--rose)}
+@media(min-width:1151px){body.music-open .wrap{max-width:1040px;margin-right:310px;margin-left:auto}}
+@media(max-width:650px){.music-device{width:280px;right:12px;bottom:12px;max-height:calc(100dvh - 24px)}.music-toggle{right:12px;bottom:12px}.song-choice strong{font-size:15px}.song-choice{gap:12px}}
+/* The book has a bounded footprint; animation is clipped to the paper only. */
+.wrap,body.music-open .wrap{width:100%;max-width:900px;margin:0 auto}
+.book-shell{--page-height:680px;--letter-size:18px;--letter-line:32px;--paragraph-gap:24px}
+.diary-layout{grid-template-columns:180px minmax(0,1fr)}
+.contents{padding:32px 18px}
+.page-stage{height:var(--page-height);display:grid;grid-template-rows:minmax(0,1fr) 62px;z-index:auto;perspective:none}
+.page-window{position:relative;min-height:0;overflow:hidden;perspective:1800px;isolation:isolate}
+.page-window>.diary-page{height:100%;padding:32px 36px 24px;perspective:none;background-color:var(--paper);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--letter-line) - 1px),#c6b7a52e calc(var(--letter-line) - 1px),#c6b7a52e var(--letter-line))}
+.page-stage>.page-nav{height:62px;margin:0;padding:12px 28px;border-top:3px double var(--line);z-index:20}
+.page-stage>.page-nav button{min-height:36px}
+.anniversary-letter{font-size:var(--letter-size);line-height:var(--letter-line);padding:10px 0 24px}
+.anniversary-letter p,.anniversary-letter p:first-child{margin-bottom:var(--paragraph-gap)}
+.anniversary-letter p:first-child{font-size:calc(var(--letter-size) + 2px)}
+.anniversary-letter p:last-child{margin-bottom:0}
+.love-reasons{line-height:inherit;margin-bottom:var(--paragraph-gap)}
+.scrapbook{gap:32px;padding:38px 6px 48px}
+.scrap-photo img{height:300px;max-height:300px}
+.scrap-photo:only-child{max-width:270px}
+/* A cloth-bound cover with a brass clasp. */
+.cover-shell{width:min(410px,100%);height:540px;position:relative;perspective:1800px}
+.cover-paper{position:absolute;inset:8px 0 5px 5px;border-radius:5px 17px 17px 5px;background:repeating-linear-gradient(to bottom,#fffaf1 0,#fffaf1 31px,#e5d9cc 32px);border:1px solid #d2bfa6;box-shadow:4px 4px 0 #ddcfbb,7px 7px 0 #d0bfa7}
+.login-card{max-width:none;width:100%;height:100%;position:relative;z-index:2;transform-origin:left center;transform-style:preserve-3d;backface-visibility:hidden;border:1px solid #623c45;border-radius:5px 16px 16px 5px;background-color:#854651;background-image:linear-gradient(90deg,#0003,transparent 26px,#fff1 28px,transparent 32px),repeating-linear-gradient(45deg,transparent 0,transparent 2px,#ffffff04 2px,#ffffff04 3px);padding:62px 38px 36px 48px;color:#fff5dc;box-shadow:inset 0 0 0 7px #ffffff08,inset 0 0 0 9px #d5af8440,4px 10px 30px #4a292a2b}
+.login-card:before{left:22px;top:12px;bottom:12px;border-left:2px solid #d2a88355}
+.login-caption{color:#f0d8ad;font-size:17px;letter-spacing:3px;line-height:2.1;margin-bottom:144px}
+.login-form label{color:#f4dfbe}.login-error{color:#ffe2cb}
+.login-submit{background:#e1c193;color:#623843;border:1px solid #edcea6}
+.password-field{background:#fff7e8;border-color:#d6b48b}
+.cover-lock{position:absolute;z-index:4;right:-12px;top:180px;width:112px;height:54px;border:1px solid #643f47;border-radius:10px 5px 5px 10px;background:linear-gradient(#965564,#75404d);box-shadow:inset 0 0 0 4px #ffffff08,0 4px 8px #32182033;display:grid;place-items:center;transform-origin:right center;pointer-events:none}
+.lock-body{position:relative;width:34px;height:29px;background:linear-gradient(135deg,#edd29b,#b78b4c);border:1px solid #9c753d;border-radius:5px;box-shadow:1px 2px 4px #261a2244}
+.lock-shackle{position:absolute;width:24px;height:22px;top:-18px;left:4px;border:4px solid #ddbd7e;border-bottom:0;border-radius:15px 15px 0 0;transform-origin:80% 100%}
+.lock-body:after{content:"";position:absolute;width:5px;height:10px;left:14px;top:10px;border-radius:4px 4px 1px 1px;background:#785533}
+.cover-local-link{display:block;font-size:11px;color:#f0d8ad;text-align:center;margin-top:12px;text-underline-offset:3px}
+@media(max-width:650px){.book-shell{--page-height:760px;--letter-size:17px;--letter-line:30px}.diary-layout{grid-template-columns:1fr}.contents{padding:12px 16px}.page-window>.diary-page{padding:28px 24px 20px}.page-stage>.page-nav{padding:10px 18px}.scrap-photo img{height:240px;max-height:240px}.scrap-photo:only-child img{height:300px;max-height:300px}.cover-shell{height:520px;max-width:370px}.login-card{padding:46px 26px 26px 36px}.login-caption{font-size:15px;margin-bottom:144px}.cover-lock{top:163px;right:-8px;width:100px}}
+@media(min-width:1151px){.wrap,body.music-open .wrap{width:calc(100% - 310px);max-width:900px;margin:0 310px 0 auto}}
+/* The cover and all inside pages occupy the same small, cloth-bound volume. */
+.shared-book{position:relative;width:min(410px,100%);height:540px;margin:max(84px,calc((100dvh - 620px)/2)) auto 68px;background:#854651;border-radius:5px 16px 16px 5px;box-shadow:4px 5px 0 #d9c6ac,7px 8px 0 #cdb69b,0 18px 36px #4a292a24}
+.shared-book>.login-screen{position:absolute;inset:0;min-height:0;padding:0;z-index:5;display:block}
+.shared-book .cover-shell{width:100%;height:100%;max-width:none}
+.shared-book .login-card{box-shadow:inset 0 0 0 7px #ffffff08,inset 0 0 0 9px #d5af8440}
+#sharedBook .wrap,body.music-open #sharedBook .wrap{position:absolute;inset:0;width:100%;max-width:none;height:100%;margin:0;padding:10px 10px 10px 22px;background:linear-gradient(90deg,#603640,#854651 20px,#905460 24px,#854651 29px);border:1px solid #623c45;border-radius:5px 16px 16px 5px}
+.shared-book .book-shell{height:100%;margin:0;--page-height:458px;--contents-height:60px;--letter-size:14px;--letter-line:25px;--paragraph-gap:14px}
+.shared-book .book{height:100%;border-radius:2px 9px 9px 2px;box-shadow:2px 2px 0 #ddcdb9,4px 3px 0 #cdbba5;overflow:hidden}
+.shared-book .diary-layout{grid-template-columns:1fr;grid-template-rows:60px minmax(0,1fr)}
+.shared-book .contents{height:60px;padding:20px 10px 5px;overflow:hidden;background:#fbf3e7;border-right:0;border-bottom:1px solid #dfcebb}
+.shared-book .contents h2{display:none}
+.shared-book .entry-list{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;height:34px;align-items:flex-start}
+.shared-book .entry-link{flex:0 0 44px;font-size:10px;line-height:20px;text-align:center;padding:2px;margin:0;border-left:0;border-bottom:2px solid transparent}
+.shared-book .entry-link[aria-current="page"]{border-bottom-color:var(--rose);background:#f2e1d8}
+.shared-book .page-stage{grid-template-rows:minmax(0,1fr) 46px}
+.shared-book .page-window>.diary-page{padding:20px 22px 14px}
+.shared-book .page-stage>.page-nav{height:46px;padding:4px 14px}
+.shared-book .page-nav button{font-size:11px;min-height:30px}
+.shared-book .page-number{font-size:10px;letter-spacing:1px}
+.shared-book .diary-page:before{left:10px;top:12px;bottom:12px}
+.shared-book .anniversary-letter{padding:4px 0 14px}
+.shared-book .scrapbook{padding:28px 2px 34px;gap:22px}
+.shared-book .scrap-photo{padding:5px 5px 15px;flex-basis:calc(50% - 11px);max-width:145px;transform:translateY(-12px) rotate(-5deg)}
+.shared-book .scrap-photo:nth-child(even){transform:translateY(14px) rotate(5deg)}
+.shared-book .scrap-photo:only-child{flex-basis:65%;max-width:205px;transform:rotate(-4deg)}
+.shared-book .scrap-photo img{height:195px;max-height:195px}
+.shared-book .scrap-photo:only-child img{height:260px;max-height:260px}
+.shared-book .scrap-photo:before{width:44px;left:calc(50% - 22px);height:20px;top:-10px}
+.shared-book .sticker-heart{font-size:28px;top:8px;right:12px}.shared-book .sticker-pair{font-size:22px;bottom:8px;left:12px}.shared-book .sticker-flower{font-size:24px;right:12px;bottom:10px}.shared-book .sticker-star{font-size:18px;left:3px}
+.shared-book .page-stickers{inset:0}
+.shared-book .tabs{top:-38px;right:2px;left:auto;gap:6px;align-items:flex-start}
+.shared-book .tab{width:92px;min-height:54px;padding:7px 4px 18px;font-size:10px}
+.shared-book .tab[aria-selected="true"]{transform:translateY(4px)}
+.shared-book .topbar{position:absolute;top:-82px;left:0;width:100%;margin:0;padding:0 4px;transition:opacity .4s}
+.shared-book .topbar .eyebrow{font-size:9px;letter-spacing:1.5px}
+.shared-book .cover-heading{display:none}
+.shared-book .footer{position:absolute;top:100%;left:0;width:100%;margin:18px 0 0;font-size:9px}
+.shared-book .panel{padding:30px 22px 20px}.shared-book .panel h2{font-size:21px}.shared-book .gallery-grid{grid-template-columns:repeat(2,1fr);gap:14px}.shared-book .polaroid img{height:120px}
+.shared-book.is-opening .cover-paper{opacity:0}
+.shared-book .tabs,.shared-book .footer{transition:opacity .45s ease}
+.shared-book.is-opening .topbar,.shared-book.is-opening .tabs,.shared-book.is-opening .footer{opacity:0;pointer-events:none}
+@media(max-width:650px){.shared-book{max-width:370px;height:520px}.shared-book .scrap-photo img{height:175px;max-height:175px}.shared-book .scrap-photo:only-child img{height:235px;max-height:235px}.shared-book .tab{width:86px}.shared-book .topbar{top:-78px}}
+@media(prefers-reduced-motion:reduce){.shared-book .topbar,.shared-book .tabs,.shared-book .footer{transition:none}}
+.shared-book{transition:width .7s cubic-bezier(.25,.7,.25,1)}
+.shared-book.is-open{width:min(820px,100%)}
+.shared-book.is-open>.login-screen{left:auto;right:0;width:min(410px,calc(100vw - 40px))}
+.shared-book.is-open .page-window{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);perspective:2000px}
+.shared-book.is-open .page-window>.diary-page{min-width:0;border-radius:0;background-color:var(--paper)}
+.shared-book.is-open .page-window>#diaryPage{box-shadow:inset -14px 0 22px -18px #6d513b88;border-right:1px solid #d9c7b5}
+.shared-book.is-open .page-window>#rightPage{box-shadow:inset 14px 0 22px -18px #6d513b88;border-left:1px solid #fffaf1}
+.shared-book.is-open .turning-sheet{left:50%;width:50%;transform-origin:0 50%}
+.shared-book.is-open .sheet-front.diary-page,.shared-book.is-open .sheet-back>.diary-page{height:100%;width:100%;background-color:var(--paper)}
+.sheet-back>.diary-page{position:absolute;inset:0}
+.sheet-back:has(>.diary-page):after{display:none}
+.page-folio{position:absolute;bottom:3px;left:0;right:0;text-align:center;color:#ab9483;font:9px Georgia,serif;pointer-events:none}
+.shared-book.is-open .page-window>.diary-page{padding-bottom:22px}
+@media(max-width:650px){.shared-book.is-open{max-width:740px}.shared-book.is-open>.login-screen{width:min(370px,calc(100vw - 28px))}.shared-book.is-open .page-window>.diary-page{padding:18px 12px 22px}.shared-book.is-open .scrapbook{gap:12px;padding:25px 0}.shared-book.is-open .scrap-photo{flex-basis:calc(50% - 6px)}.shared-book.is-open .scrap-photo img{height:135px;max-height:135px}.shared-book.is-open .scrap-photo:only-child{flex-basis:85%}.shared-book.is-open .scrap-photo:only-child img{height:205px;max-height:205px}}
+@media(prefers-reduced-motion:reduce){.shared-book{transition:none}}
+.shared-book .book{transition:opacity .35s ease}
+.shared-book .diary-layout,.shared-book .panel{transition:opacity .4s ease}
+.shared-book.is-opening .book{opacity:0}
+.shared-book.is-opening .diary-layout,.shared-book.is-opening .panel{opacity:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.shared-book .book,.shared-book .diary-layout,.shared-book .panel{transition:none}}
+/* Reserve the spread from the start, but draw ONLY the closed right-hand book. */
+.shared-book,.shared-book.is-open{width:min(820px,100%);max-width:820px;background:transparent;box-shadow:none;transition:none;perspective:2000px}
+.shared-book>.login-screen,.shared-book.is-open>.login-screen{left:50%;right:0;width:50%;transform:translateX(-50%)}
+.shared-book.is-positioned>.login-screen{transform:translateX(0)}
+.page-window>.stationary-page{position:absolute;top:0;bottom:0;width:50%;height:100%;z-index:7;pointer-events:none}
+.shared-book.is-revealed{background:#854651;box-shadow:4px 5px 0 #d9c6ac,7px 8px 0 #cdb69b,0 18px 36px #4a292a24}
+.shared-book.is-opening .cover-paper{opacity:1}
+.cover-turner{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
+.cover-turner>.login-card{position:absolute;inset:0;transform:none;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cover-back{position:absolute;inset:0;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid #623c45;border-radius:5px 16px 16px 5px;background:#854651;background-image:repeating-linear-gradient(45deg,transparent 0,transparent 2px,#ffffff04 2px,#ffffff04 3px);box-shadow:inset 0 0 0 7px #ffffff08,inset 0 0 0 9px #d5af8440,3px 8px 22px #4a292a24}
+@media(max-width:650px){.shared-book,.shared-book.is-open{max-width:740px}.shared-book .login-card{padding:38px 14px 24px 20px}.shared-book .login-caption{font-size:10px;letter-spacing:1.5px;margin-bottom:145px}.shared-book .cover-lock{width:75px;right:-6px;top:157px}.shared-book .login-submit{font-size:12px;padding:10px 4px}}
+
+/* All bookmarks open a fixed, ruled two-page spread inside the same cover. */
+.shared-book .panel.book-section{padding:0;overflow:hidden;display:grid;grid-template-rows:60px minmax(0,1fr) 46px;background:none}
+.shared-book .panel.book-section[hidden]{display:none}
+.section-heading{display:flex;align-items:center;justify-content:space-between;padding:10px 22px;border-bottom:1px solid var(--line)}
+.shared-book .section-heading h2{font-size:16px;margin:0;color:var(--rose)}
+.section-heading .upload-label{font-size:12px;color:var(--rose);padding:6px 10px;border:1px dashed #c6a2a6;border-radius:3px}
+.heading-heart{color:#b77886;font-size:23px}
+.section-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:0;overflow:hidden}
+.collection-page{position:relative;min-width:0;min-height:0;padding:22px;background-color:var(--paper);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--letter-line) - 1px),#c6b7a52e calc(var(--letter-line) - 1px),#c6b7a52e var(--letter-line));background-position:0 16px;overflow:hidden}
+.collection-page:first-child{border-right:1px solid #d9c7b5;box-shadow:inset -14px 0 22px -18px #6d513b88}
+.collection-page:last-child{box-shadow:inset 14px 0 22px -18px #6d513b88}
+.collection-page:before{content:'';position:absolute;top:12px;bottom:12px;left:10px;border-left:1px solid #c7929638;pointer-events:none}
+#gallery .collection-page{display:flex;align-items:center;justify-content:center;gap:22px;padding:35px 22px 45px}
+#gallery .polaroid{position:relative;min-width:0;width:46%;max-width:145px;padding:7px 7px 19px;transform:rotate(-7deg);flex-shrink:1}
+#gallery .polaroid:nth-child(2){transform:rotate(6deg);margin-top:58px}
+#gallery .polaroid:only-of-type{width:72%;max-width:210px;transform:rotate(-4deg)}
+#gallery .polaroid:before{content:'';position:absolute;width:42px;height:19px;top:-12px;left:calc(50% - 21px);background:#dbc8b3a6;transform:rotate(4deg);border:1px dashed #d2bda655;z-index:1}
+.shared-book #gallery .polaroid img{width:100%;height:auto;max-height:250px;object-fit:contain}
+.section-nav{border-top:1px solid var(--line);margin:0;padding:8px 18px;display:flex;align-items:center;justify-content:space-between;background:var(--paper)}
+.section-nav button:disabled{opacity:.35;cursor:default}
+.paper-heading{display:block;font-size:14px;color:var(--rose);margin:4px 0 14px}
+.playlist-page #songList{display:grid;gap:7px}
+.playlist-page .song-choice{padding:12px 8px;gap:12px;border:1px solid #ddccbc;background:#fffdf67d;border-radius:2px}
+.playlist-page .song-choice[aria-current="true"]{border-color:#b97b88;background:#f0dfdf90}
+.playlist-page .song-choice strong{font-size:13px;line-height:1.6}
+.playlist-page .song-choice small{font-size:10px}
+.playlist-page .song-number{font-size:19px}
+.playlist-page .song-action{font-size:12px}
+.note-page{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.paper-cassette{width:210px;max-width:85%;height:116px;background:#cda4a1;border:1px solid #a8777d;border-radius:9px;box-shadow:3px 5px 0 #c9b7a933;transform:rotate(-6deg);padding:10px 15px;position:relative;flex-shrink:0}
+.cassette-label{background:#f8ecd7;text-align:center;border:1px solid #b88588;font:italic 15px Georgia,serif;padding:5px;color:#875059}
+.cassette-reels{height:40px;display:flex;align-items:center;justify-content:space-around;background:#a6767e;margin:8px 7px;border-radius:18px;padding:4px}
+.cassette-reels i{width:26px;height:26px;border:6px dotted #f8ecd7;border-radius:50%;background:#655254}
+.cassette-reels span{width:48px;height:15px;border:1px solid #e1c1b3;background:#806569}
+.cassette-bottom{width:65%;height:12px;margin:auto;border:1px solid #aa7b7d;border-radius:7px 7px 0 0;background:#ba8b91}
+.note-page .little-note{margin:0;width:100%;padding:15px 16px;background:#f4e9d9;box-shadow:2px 5px 9px #72513c14;transform:rotate(2deg);font-size:14px;line-height:1.9;border-left:none;border-top:2px solid #cf9b9d}
+.note-page .little-note p{margin-bottom:12px}.note-page .little-note button{font-size:11px}.music-margin{font-size:11px;color:var(--muted)}
+@media(max-width:650px){.section-heading{padding:10px 12px}.collection-page{padding:18px 12px}.shared-book .section-heading h2{font-size:13px}#gallery .collection-page{gap:10px;padding:30px 12px}#gallery .polaroid{padding:4px 4px 12px}#gallery .polaroid:nth-child(2){margin-top:40px}.playlist-page .song-choice{gap:6px;padding:10px 5px;flex-wrap:wrap}.playlist-page .song-choice strong{font-size:10px}.playlist-page .song-choice small{font-size:9px}.playlist-page .song-action{display:none}.paper-heading{font-size:11px}.note-page{gap:18px}.note-page .little-note{font-size:11px;padding:10px;line-height:1.8}.paper-cassette{height:94px;padding:7px}.cassette-label{font-size:10px}.cassette-reels{margin:6px 0;height:31px}.cassette-reels span{width:25px}.cassette-reels i{width:21px;height:21px;border-width:5px}.music-margin{font-size:9px}.section-nav{padding:8px 10px}.section-nav button{font-size:10px}}
+
+</style>
+</head>
+<body>
+<div id="sharedBook" class="shared-book">
+<main id="loginScreen" class="login-screen">
+  <div class="cover-shell">
+  <div class="cover-paper" aria-hidden="true"></div>
+  <div id="coverTurner" class="cover-turner">
+  <div class="login-card" id="bookCover">
+    <p class="eyebrow login-caption">OUR FIRST ANNIVERSARY</p>
+    <form id="loginForm" class="login-form">
+      <label for="anniversaryPassword">รหัสผ่าน</label>
+      <div class="password-field">
+        <input id="anniversaryPassword" type="password" name="password" autocomplete="current-password" placeholder="ใส่รหัสผ่าน" required aria-describedby="loginError" spellcheck="false" autocapitalize="none">
+        <button id="passwordToggle" class="password-toggle" type="button" aria-controls="anniversaryPassword" aria-pressed="false">แสดง</button>
+      </div>
+      <p id="loginError" class="login-error" role="status" aria-live="polite"></p>
+      <button type="submit" class="primary login-submit">เปิดดูบันทึกรัก</button>
+    </form>
+    <noscript><p>กรุณาเปิด JavaScript เพื่อเข้าสู่เว็บ</p></noscript>
+    <a id="coverLocalLink" class="cover-local-link" href="http://127.0.0.1:9871/letmecheck.html" hidden>เปิดสมุดเวอร์ชันฟังเพลง ↗</a>
+    <div class="cover-lock" id="coverLock" aria-hidden="true"><div class="lock-body"><div id="lockShackle" class="lock-shackle"></div></div></div>
+  </div>
+  <div class="cover-back" aria-hidden="true"></div>
+  </div>
+  </div>
+</main>
+<main id="anniversaryPage" class="wrap" hidden>
+  <div class="topbar"><p class="eyebrow">OUR FIRST ANNIVERSARY</p><button id="logoutButton" class="text-button" type="button">ปิดสมุด</button></div>
+  <header class="cover-heading"><h1 id="anniversaryTitle" tabindex="-1">บันทึกรัก</h1></header>
+  <div class="book-shell" id="bookShell">
+  <div class="tabs" role="tablist" aria-label="ที่คั่นหนังสือ">
+    <button id="diaryTab" class="tab" role="tab" aria-selected="true" aria-controls="diaryPanel" type="button">หน้าบันทึก</button>
+    <button id="photosTab" class="tab" role="tab" aria-selected="false" aria-controls="photosPanel" tabindex="-1" type="button">รูปที่เก็บไว้</button>
+    <button id="songsTab" class="tab" role="tab" aria-selected="false" aria-controls="songsPanel" tabindex="-1" type="button">เพลงในสมุด</button>
+  </div>
+  <div class="book">
+    <section id="diaryPanel" role="tabpanel" aria-labelledby="diaryTab">
+      <div class="diary-layout">
+        <aside class="contents" id="bookContents"><h2>สารบัญความทรงจำ</h2><nav class="entry-list" id="entryList" aria-label="เลือกบันทึก">
+          <button class="entry-link" data-entry="0" aria-current="page">หน้า 01</button>
+          <button class="entry-link" data-entry="1">หน้า 02</button>
+          <button class="entry-link" data-entry="2">หน้า 03</button>
+          <button class="entry-link" data-entry="3">หน้า 04</button>
+          <button class="entry-link" data-entry="4">หน้า 05</button>
+          <button class="entry-link" data-entry="5">หน้า 06</button>
+        </nav></aside>
+        <div id="pageStage" class="page-stage">
+        <div id="pageWindow" class="page-window">
+        <article id="diaryPage" class="diary-page" aria-live="polite" aria-atomic="true">
+          <div id="entryPhotos" class="scrapbook" aria-label="รูปในหน้าบันทึก"></div>
+          <div id="entryLetter" class="anniversary-letter" hidden></div>
+          <div class="page-stickers" aria-hidden="true"><span class="sticker sticker-heart">♥</span><span class="sticker sticker-pair">♡♡</span><span class="sticker sticker-star">✧</span><span class="sticker sticker-flower">❀</span></div>
+          <span id="leftFolio" class="page-folio" aria-hidden="true"></span>
+        </article>
+        <article id="rightPage" class="diary-page" aria-label="หน้าขวา">
+          <div id="rightPhotos" class="scrapbook" aria-label="รูปในหน้าขวา"></div>
+          <div id="rightLetter" class="anniversary-letter" hidden></div>
+          <div class="page-stickers" aria-hidden="true"><span class="sticker sticker-heart">♡</span><span class="sticker sticker-pair">♡♡</span><span class="sticker sticker-star">✧</span><span class="sticker sticker-flower">❀</span></div>
+          <span id="rightFolio" class="page-folio" aria-hidden="true"></span>
+        </article>
+        </div>
+        <div class="page-nav"><button id="prevEntry" type="button">← หน้าก่อน</button><span id="pageNumber" class="page-number"></span><button id="nextEntry" type="button">หน้าถัดไป →</button></div>
+        </div>
+      </div>
+    </section>
+    <section id="photosPanel" class="panel book-section" role="tabpanel" aria-labelledby="photosTab" hidden>
+      <header class="section-heading"><h2>รูปที่เก็บไว้</h2><label class="upload-label">＋ เพิ่มรูป<input id="fileInput" type="file" accept="image/*" multiple></label></header>
+      <div class="section-spread" id="gallery"><article class="collection-page" id="albumLeft" aria-label="รูปฝั่งซ้าย"></article><article class="collection-page" id="albumRight" aria-label="รูปฝั่งขวา"></article></div>
+      <div class="page-nav section-nav"><button id="albumPrev" type="button">← หน้าก่อน</button><span id="albumNumber" class="page-number"></span><button id="albumNext" type="button">หน้าถัดไป →</button></div>
+    </section>
+    <section id="songsPanel" class="panel book-section" role="tabpanel" aria-labelledby="songsTab" hidden>
+      <header class="section-heading"><h2>เพลงในสมุด</h2><span class="heading-heart" aria-hidden="true">♫ ♡</span></header>
+      <div class="section-spread">
+        <article class="collection-page playlist-page" aria-label="เพลงที่เลือกไว้"><span class="paper-heading">เพลงที่อยากฟังด้วยกัน</span><div id="songList" aria-label="เพลงที่เลือกไว้"></div><span class="page-folio">♫</span></article>
+        <article class="collection-page note-page" aria-label="โน้ตถึงจิน"><div class="paper-cassette" aria-hidden="true"><div class="cassette-label">for you, Jin ♡</div><div class="cassette-reels"><i></i><span></span><i></i></div><div class="cassette-bottom"></div></div><div class="little-note"><p id="messageText"></p><button id="nextMessage" type="button">อ่านโน้ตอีกใบ ↗</button></div><span class="sticker sticker-pair" aria-hidden="true">♡♡</span><span class="page-folio">♡</span></article>
+      </div>
+      <div class="page-nav section-nav"><span class="music-margin">เลือกเพลงในหน้าซ้ายเพื่อฟัง</span><button id="openPlayer" type="button">เปิดเครื่องเล่น ♫</button></div>
+    </section>
+  </div>
+  </div>
+  <p class="footer">a year of us · 2024 — 2025</p>
+  <dialog id="photoModal" class="modal" aria-label="รูปความทรงจำ"><img id="slideImg" alt="รูปความทรงจำ"><div class="modal-controls"><button id="prevPhoto" type="button" aria-label="รูปก่อนหน้า">←</button><button id="closePhoto" type="button">ปิดรูป</button><button id="nextPhoto" type="button" aria-label="รูปถัดไป">→</button></div></dialog>
+</main>
+ </div>
+<button id="musicToggle" class="music-toggle" type="button" aria-controls="musicDevice" aria-expanded="false" hidden>♫ เครื่องเล่นเพลง</button>
+<aside id="musicDevice" class="music-device" aria-label="เครื่องเล่นเพลง" hidden>
+  <div class="device-header"><span>OUR LITTLE MP5 ♡</span><button id="musicClose" class="device-close" type="button" aria-label="ปิดเครื่องเล่น">×</button></div>
+  <div class="device-screen">
+    <p id="trackTitle" class="device-track"></p><p id="trackArtist" class="device-artist"></p>
+    <div class="youtube-screen"><div id="youtubePlayer" class="youtube-placeholder">♫</div></div>
+    <input id="musicSeek" class="device-progress" type="range" min="0" max="100" value="0" aria-label="ตำแหน่งในเพลง" disabled>
+    <div class="device-times"><span id="musicTime">0:00</span><span id="musicDuration">0:00</span></div>
+  </div>
+  <p id="musicStatus" class="device-status" role="status">กดเล่นเพื่อฟังเพลง</p>
+  <div class="device-controls"><button id="musicPrev" type="button" aria-label="เพลงก่อนหน้า">⏮</button><button id="musicPlay" class="device-play" type="button" aria-label="เล่นเพลง">▶</button><button id="musicNext" type="button" aria-label="เพลงถัดไป">⏭</button></div>
+  <label class="device-volume" for="musicVolume">เสียง<input id="musicVolume" type="range" min="0" max="100" value="55"></label>
+  <a id="musicExternal" class="device-link" target="_blank" rel="noopener noreferrer">เปิดเพลงนี้ใน YouTube Music ↗</a>
+  <a id="localMusicLink" class="device-link" href="http://127.0.0.1:9871/letmecheck.html" hidden>เปิดเว็บสำหรับฟังเพลง ↗</a>
+</aside>
+<script>
+// A presentation gate for this static diary, not server authentication.
+const $ = id => document.getElementById(id);
+const passwordInput = $('anniversaryPassword');
+const passwordToggle = $('passwordToggle');
+let unlocking=false;
+let coverAnimations=[];
+if(location.protocol==='file:')$('coverLocalLink').hidden=false;
+passwordToggle.addEventListener('click', () => {
+  const show = passwordInput.type === 'password';
+  passwordInput.type = show ? 'text' : 'password';
+  passwordToggle.textContent = show ? 'ซ่อน' : 'แสดง';
+  passwordToggle.setAttribute('aria-pressed', String(show));
+});
+passwordInput.addEventListener('input', () => {$('loginError').textContent = ''; passwordInput.removeAttribute('aria-invalid');});
+$('loginForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  if(unlocking)return;
+  if (passwordInput.value !== 'iloveu4ever15267') {
+    $('loginError').textContent = 'รหัสผ่านไม่ถูกต้อง ลองอีกครั้งนะ';
+    passwordInput.setAttribute('aria-invalid', 'true'); passwordInput.focus(); return;
+  }
+  $('loginForm').reset(); passwordInput.type = 'password'; passwordToggle.textContent = 'แสดง';
+  passwordToggle.setAttribute('aria-pressed', 'false'); passwordInput.removeAttribute('aria-invalid'); $('loginError').textContent = '';
+  unlocking=true;
+  const submitButton=$('loginForm').querySelector('[type="submit"]');submitButton.disabled=true;
+  $('loginForm').setAttribute('aria-busy','true');
+  $('sharedBook').classList.add('is-opening');
+  await document.fonts.ready;
+  const animateCover=!window.matchMedia('(prefers-reduced-motion:reduce)').matches&&typeof $('bookCover').animate==='function';
+  coverAnimations=[];
+  if(animateCover){
+    const shackle=$('lockShackle').animate([{transform:'translateY(0) rotate(0deg)'},{transform:'translateY(-8px) rotate(-32deg)'}],{duration:450,fill:'forwards',easing:'ease-out'});
+    coverAnimations.push(shackle);
+    await shackle.finished.catch(()=>{});
+    const strap=$('coverLock').animate([{transform:'translateX(0) rotate(0deg)',opacity:1},{transform:'translateX(65px) rotate(20deg)',opacity:0}],{duration:450,fill:'forwards',easing:'ease-in'});
+    coverAnimations.push(strap);
+    await strap.finished.catch(()=>{});
+    const formFade=$('loginForm').animate([{opacity:1},{opacity:0}],{duration:180,fill:'forwards',easing:'ease-out'});
+    coverAnimations.push(formFade);
+    await formFade.finished.catch(()=>{});
+  }
+  // Move the closed volume from the center to the right before opening its cover.
+  if(animateCover){
+    const move=$('loginScreen').animate([{transform:'translateX(-50%)'},{transform:'translateX(0)'}],{duration:550,fill:'forwards',easing:'cubic-bezier(.4,0,.2,1)'});
+    coverAnimations.push(move);
+    await move.finished.catch(()=>{});
+  }
+  $('sharedBook').classList.add('is-positioned');
+  // Keep the complete inside view hidden until the cover AND unfolding finish.
+  $('sharedBook').classList.add('is-open');
+  $('anniversaryPage').inert=true;
+  if(animateCover){
+    const cover=$('coverTurner').animate([{transform:'rotateY(0deg)'},{transform:'rotateY(-85deg)',offset:.5},{transform:'rotateY(-180deg)'}],{duration:1400,fill:'forwards',easing:'cubic-bezier(.28,.12,.2,1)'});
+    coverAnimations.push(cover);
+    await cover.finished.catch(()=>{});
+  }
+  $('sharedBook').classList.add('is-revealed');
+  $('loginScreen').hidden = true; $('anniversaryPage').hidden = false;
+  $('sharedBook').classList.remove('is-opening','is-cover-opening');
+  sizeBook();
+  if(animateCover){
+    const reveal=$('anniversaryPage').animate([{opacity:0},{opacity:1}],{duration:350,easing:'ease-out'});
+    await reveal.finished.catch(()=>{});
+  }
+  $('anniversaryPage').inert=false;$('musicToggle').hidden=false;
+  document.fonts.ready.then(()=>{if(!$('anniversaryPage').hidden)sizeBook();});
+  window.scrollTo(0,0); $('anniversaryTitle').focus({preventScroll:true});
+  unlocking=false;submitButton.disabled=false;$('loginForm').removeAttribute('aria-busy');
+});
+$('logoutButton').addEventListener('click', () => {
+  setMusicOpen(false);$('musicToggle').hidden=true;clearLeaf();
+  $('photoModal').close(); $('anniversaryPage').hidden = true; $('loginScreen').hidden = false;
+  coverAnimations.forEach(animation=>animation.cancel());coverAnimations=[];
+  $('sharedBook').classList.remove('is-opening','is-cover-opening');$('anniversaryPage').inert=false;
+  $('sharedBook').classList.remove('is-open');
+  $('sharedBook').classList.remove('is-revealed','is-positioned');
+  window.scrollTo(0,0); passwordInput.focus({preventScroll:true});
+});
+// Photos follow the order of the six supplied images.
+const entries = [
+  {photos:[0,2]},
+  {photos:[1]},
+  {photos:[3,4]},
+  {photos:[5]},
+  {photos:[], paragraphs:[
+    'สุขสันต์วันครบรอบ1ปีนะครับ',
+    'ผมมีความสุขมากๆเลยที่ได้คบกับจินมาตลอด1ปี',
+    'สมุดตัวนี้ภาพอาจจะไม่ได้เยอะมากนะครับ ผมหาได้ประมาณ นอกนั้นเป็นภาพที่ผมถ่ายจินอย่างเดียวไม่ใช่รูปคู่',
+    'ขอบคุณสำหรับ1ปีที่ผ่านมานะครับ ข้อความที่ผมเขียนอาจจะไม่ค่อยมีอะไรเท่าไหร่ แต่ผมอยากให้รู้ว่าผมรักจินมากๆเลยนะครับ',
+    'จะรักตลอดไปเลย'
+  ]},
+  {photos:[], paragraphs:[
+    'หน้านี้แถม ผมจะบอกเหตุผลทั้งหมดที่ทำให้ผมรักจินนะครับ',
+    'จริงๆมีเยอะกว่านี้มากๆแต่ถ้าผมเขียนทั้งหมดเดียวมันจะเยอะเกินไป เอาแค่นี้ไปก่อน อยากรู้เพิ่มมาถามผมเอาเองนะครับ รักนะ'
+  ], reasons:[
+    'จินยิ้มน่ารักๆมาก',
+    'จินพูดจาน่าฟังมากๆ',
+    'น้ำเสียงของจินผมรู้สึกว่าฟังได้ไม่มีเบื่อ',
+    'จินเป็นคนที่ใจดีมากๆ',
+    'จินเป็นคนที่ดูเรียบร้อยมากๆ',
+    'จินแต่งตัวได้ดูดีมีเสน่ห์มาก',
+    'จินเป็นคนที่หัวเราะได้น่าฟังมาก',
+    'ผมชอบช่วงเวลาที่ผมได้อยู่กับจินมากๆ',
+    'จินทำให้ผมรู้สึกว่าผมไม่ได้อยู่คนเดียว',
+    'จินเป็นคนคอยเติมกำลังใจให้ผม',
+    'จินเป็นคนที่อ่อนโยนมากๆ',
+    'จินเป็นคนที่ตัวเล็กน่ารัก',
+    'จินแก้มนุ่ม',
+    'จินคอยทำให้ช่วงเวลาหน้าเบื่อผ่านไปไวมาก',
+    'จินเป็นคนที่ทำให้ผมอยากจะเป็นคนที่ดีขึ้น'
+  ]}
+];
+const reasonEntry=entries.pop();
+function reasonPage(start){return {photos:[],paragraphs:start===0?[reasonEntry.paragraphs[0]]:[],reasons:[],reasonStart:start+1};}
+for(let start=0;start<reasonEntry.reasons.length;start+=5){const page=reasonPage(start);page.reasons=reasonEntry.reasons.slice(start,start+5);if(start+5>=reasonEntry.reasons.length)page.paragraphs.push(reasonEntry.paragraphs[1]);entries.push(page);}
+let entryIndex = 0;
+let entryButtons=[];
+function makeLetterParts(entry){
+  const parts=(entry.paragraphs||[]).map(text=>{const paragraph=document.createElement('p');paragraph.textContent=text;return paragraph;});
+  if(entry.reasons){
+    const list=document.createElement('ol');list.className='love-reasons';list.start=entry.reasonStart||1;
+    entry.reasons.forEach(text=>{const item=document.createElement('li');item.textContent=text;list.appendChild(item);});
+    parts.splice(entry.reasonStart===1?1:0,0,list);
+  }
+  return parts;
+}
+function buildContents(){
+  entryButtons=entries.map((entry,index)=>{const button=document.createElement('button');button.type='button';button.className='entry-link';button.dataset.entry=String(index);button.textContent='หน้า '+String(index+1).padStart(2,'0');button.addEventListener('click',()=>changeEntry(index));return button;});
+  $('entryList').replaceChildren(...entryButtons);
+}
+function sizeBook(){
+  const page=$('diaryPage');
+  if($('anniversaryPage').hidden||!page.clientWidth)return;
+  clearLeaf();
+  const narrow=window.matchMedia('(max-width:650px)').matches;
+  const contentsHeight=60;
+  const height=$('bookShell').clientHeight-contentsHeight;
+  const shell=$('bookShell');shell.style.setProperty('--page-height',height+'px');
+  shell.style.setProperty('--contents-height',contentsHeight+'px');
+  let letterSize=14,lineHeight=25,gap=14;
+  const setLetterScale=()=>{shell.style.setProperty('--letter-size',letterSize+'px');shell.style.setProperty('--letter-line',lineHeight+'px');shell.style.setProperty('--paragraph-gap',gap+'px');};
+  setLetterScale();
+  const styles=getComputedStyle(page);
+  const paddingY=parseFloat(styles.paddingTop)+parseFloat(styles.paddingBottom);
+  const probe=document.createElement('div');probe.className='anniversary-letter';
+  Object.assign(probe.style,{position:'absolute',visibility:'hidden',pointerEvents:'none',width:(page.clientWidth-parseFloat(styles.paddingLeft)-parseFloat(styles.paddingRight))+'px',maxWidth:'520px',height:'auto',top:'0',left:styles.paddingLeft});
+  probe.setAttribute('aria-hidden','true');page.appendChild(probe);
+  probe.replaceChildren(...makeLetterParts(entries[4]));
+  const navHeight=$('prevEntry').parentElement.getBoundingClientRect().height;
+  const available=height-paddingY-navHeight;
+  while(probe.getBoundingClientRect().height>available-4&&letterSize>10){letterSize--;lineHeight=Math.max(20,lineHeight-1);gap=Math.max(8,gap-2);setLetterScale();}
+  const fits=entry=>{probe.replaceChildren(...makeLetterParts(entry));return probe.getBoundingClientRect().height<=available-2;};
+  const pages=[];let current=reasonPage(0);
+  reasonEntry.reasons.forEach((reason,index)=>{
+    const candidate={...current,reasons:[...current.reasons,reason]};
+    if(current.reasons.length&&(current.reasons.length>=5||!fits(candidate))){pages.push(current);current=reasonPage(index);}
+    current.reasons.push(reason);
+  });
+  const ending={...current,paragraphs:[...current.paragraphs,reasonEntry.paragraphs[1]]};
+  if(fits(ending)){pages.push(ending);}else{pages.push(current,{photos:[],paragraphs:[reasonEntry.paragraphs[1]]});}
+  probe.remove();entries.splice(5,entries.length-5,...pages);
+  entryIndex=Math.floor(Math.min(entryIndex,entries.length-1)/2)*2;buildContents();
+  $('bookShell').style.setProperty('--contents-height',contentsHeight+'px');renderEntry();
+}
+let resizeTimer;
+window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(sizeBook,150);});
+let activeLeaf=null,activeFlip=null,activeStationary=null;
+function clearLeaf(){if(activeFlip)activeFlip.cancel();if(activeLeaf)activeLeaf.remove();if(activeStationary)activeStationary.remove();activeLeaf=null;activeFlip=null;activeStationary=null;}
+function changeEntry(index){
+  index=Math.floor(index/2)*2;
+  if(activeFlip||index<0||index>=entries.length||index===entryIndex)return;
+  clearLeaf();
+  const page=$('diaryPage'),forward=index>entryIndex;
+  const animate=!window.matchMedia('(prefers-reduced-motion:reduce)').matches&&typeof page.animate==='function';
+  let printedPage=animate&&forward?$('rightPage').cloneNode(true):null;
+  const previousLeft=animate&&!forward?page.cloneNode(true):null;
+  const stationary=animate?(forward?page:$('rightPage')).cloneNode(true):null;
+  entryIndex=index;renderEntry(!animate);
+  if(!animate)return;
+  if(!printedPage)printedPage=$('rightPage').cloneNode(true);
+  const paperStyle=getComputedStyle(page);
+  // Keep the old opposite page visible until the turning sheet covers it.
+  stationary.removeAttribute('id');stationary.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
+  stationary.removeAttribute('aria-live');stationary.setAttribute('aria-hidden','true');stationary.inert=true;
+  stationary.classList.add('stationary-page');stationary.style.left=forward?'0':'50%';
+  stationary.style.padding=paperStyle.padding;stationary.style.backgroundImage=paperStyle.backgroundImage;
+  stationary.style.backgroundPosition=paperStyle.backgroundPosition;stationary.style.perspective='none';
+  $('pageWindow').appendChild(stationary);activeStationary=stationary;
+  printedPage.style.padding=paperStyle.padding;
+  printedPage.style.backgroundImage=paperStyle.backgroundImage;
+  printedPage.style.backgroundPosition=paperStyle.backgroundPosition;
+  printedPage.style.perspective='none';
+  printedPage.removeAttribute('id');printedPage.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
+  printedPage.removeAttribute('aria-live');printedPage.classList.add('sheet-front');
+  const leaf=document.createElement('div');leaf.className='turning-sheet';leaf.setAttribute('aria-hidden','true');leaf.inert=true;
+  const back=document.createElement('div');back.className='sheet-back';
+  const reversePage=forward?page.cloneNode(true):previousLeft;
+  reversePage.removeAttribute('id');reversePage.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));reversePage.removeAttribute('aria-live');
+  reversePage.style.padding=paperStyle.padding;reversePage.style.backgroundImage=paperStyle.backgroundImage;reversePage.style.backgroundPosition=paperStyle.backgroundPosition;reversePage.style.perspective='none';
+  back.appendChild(reversePage);leaf.append(printedPage,back);
+  $('pageWindow').appendChild(leaf);activeLeaf=leaf;
+  const frames=forward?[
+    {transform:'rotateY(0deg) translateZ(0) skewY(0deg)',boxShadow:'0 0 0 #60472b00'},
+    {transform:'rotateY(-48deg) translateZ(18px) skewY(-1.5deg)',boxShadow:'14px 8px 32px #60472b35',offset:.35},
+    {transform:'rotateY(-120deg) translateZ(12px) skewY(-1deg)',boxShadow:'8px 5px 20px #60472b25',offset:.7},
+    {transform:'rotateY(-180deg) translateZ(0) skewY(0deg)',boxShadow:'0 0 0 #60472b00'}
+  ]:[
+    {transform:'rotateY(-180deg) translateZ(0) skewY(0deg)',boxShadow:'0 0 0 #60472b00'},
+    {transform:'rotateY(-120deg) translateZ(12px) skewY(-1deg)',boxShadow:'8px 5px 20px #60472b25',offset:.3},
+    {transform:'rotateY(-48deg) translateZ(18px) skewY(-1.5deg)',boxShadow:'14px 8px 32px #60472b35',offset:.65},
+    {transform:'rotateY(0deg) translateZ(0) skewY(0deg)',boxShadow:'0 0 0 #60472b00'}
+  ];
+  const flip=leaf.animate(frames,{duration:1050,easing:'cubic-bezier(.33,.08,.24,1)',fill:'forwards'});activeFlip=flip;
+  flip.finished.catch(()=>{}).then(()=>{leaf.remove();stationary.remove();if(activeLeaf===leaf){activeLeaf=null;activeFlip=null;activeStationary=null;renderNavigation();}});
+}
+function renderEntry(updateNavigation=true){
+  function fillPage(index,pageId,photosId,letterId,folioId){
+    const entry=entries[index];const paper=$(pageId);paper.dataset.page=String(index);
+    paper.dataset.kind=entry?(entry.paragraphs?'letter':'photos'):'blank';
+    paper.setAttribute('aria-label',entry?'หน้า '+(index+1):'หน้าว่าง');
+    $(photosId).hidden=!entry||Boolean(entry.paragraphs);$(letterId).hidden=!entry||!entry.paragraphs;
+    $(letterId).replaceChildren(...(entry?makeLetterParts(entry):[]));
+    $(photosId).replaceChildren(...(entry?entry.photos:[]).map(photo=>makePhoto(photo,'รูปความทรงจำ '+(photo+1),'scrap-photo')));
+    $(folioId).textContent=entry?String(index+1).padStart(2,'0'):'';
+  }
+  fillPage(entryIndex,'diaryPage','entryPhotos','entryLetter','leftFolio');
+  fillPage(entryIndex+1,'rightPage','rightPhotos','rightLetter','rightFolio');
+  if(updateNavigation)renderNavigation();
+}
+function renderNavigation(){
+  const last=Math.min(entryIndex+2,entries.length);
+  $('pageNumber').textContent=String(entryIndex+1).padStart(2,'0')+(last>entryIndex+1?' – '+String(last).padStart(2,'0'):'')+' / '+String(entries.length).padStart(2,'0');
+  $('prevEntry').disabled=entryIndex===0;$('nextEntry').disabled=entryIndex+2>=entries.length;
+  entryButtons.forEach((button,i)=>{if(i===entryIndex||i===entryIndex+1)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
+}
+$('prevEntry').addEventListener('click', () => changeEntry(entryIndex-2));
+$('nextEntry').addEventListener('click', () => changeEntry(entryIndex+2));
+const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+function selectTab(tab){clearLeaf();tabs.forEach(item => {const selected=item===tab; item.setAttribute('aria-selected',String(selected)); item.tabIndex=selected?0:-1; $(item.getAttribute('aria-controls')).hidden=!selected;});if(tab===$('diaryTab'))sizeBook();}
+tabs.forEach((tab,i) => {
+  tab.addEventListener('click', () => selectTab(tab));
+  tab.addEventListener('keydown', event => {
+    let target;
+    if(event.key==='ArrowRight') target=tabs[(i+1)%tabs.length];
+    if(event.key==='ArrowLeft') target=tabs[(i-1+tabs.length)%tabs.length];
+    if(event.key==='Home') target=tabs[0]; if(event.key==='End') target=tabs[tabs.length-1];
+    if(target){event.preventDefault();selectTab(target);target.focus();}
+  });
+});
+const messages = [
+  'ผมชอบรอยยิ้มของจินมากๆ จินพูดจาน่าฟัง ทั้งน้ำเสียงทั้งเสียงหัวเราะ ผมฟังได้ไม่มีเบื่อเลย',
+  'จินเป็นคนใจดี อ่อนโยน แล้วก็ดูเรียบร้อยมากๆ ผมรักจินตรงนี้นะครับ',
+  'จินแต่งตัวดูดีมีเสน่ห์มาก ตัวเล็กน่ารัก แล้วก็แก้มนุ่มด้วย ผมชอบมากๆเลย',
+  'ผมชอบเวลาที่ได้อยู่กับจินมากๆ จินทำให้ผมไม่รู้สึกว่าอยู่คนเดียว ช่วงเวลาที่น่าเบื่อก็ผ่านไปไวเลย',
+  'จินคอยเติมกำลังใจให้ผม แล้วก็ทำให้ผมอยากเป็นคนที่ดีขึ้น ขอบคุณนะครับ',
+  'จริงๆเหตุผลที่ผมรักจินมีเยอะกว่านี้มากๆ เอาแค่นี้ก่อนนะครับ อยากรู้เพิ่มมาถามผมเอาเอง รักนะ'
+];
+let messageIndex=0; $('messageText').textContent=messages[0];
+$('nextMessage').addEventListener('click', () => {messageIndex=(messageIndex+1)%messages.length;$('messageText').textContent=messages[messageIndex];});
+
+const tracks=[
+  {id:'Vn1eW9grhLc',title:'Pasilyo',artist:'SunKissed Lola'},
+  {id:'zNhtz0Lygik',title:'Best Part (feat. H.E.R.)',artist:'Daniel Caesar'},
+  {id:'LS7o29WzSno',title:'Tip Toe',artist:'HYBS'},
+  {id:'RumTrTLv-Ks',title:'P.S. I LOVE YOU',artist:'Paul Partohap'}
+];
+let trackIndex=0,youtube=null,youtubeReady=false,apiLoading=false,wantsPlayback=false,seekDragging=false;
+let apiTimeout=null,clockTimer=null;
+const songButtons=tracks.map((track,index)=>{
+  const button=document.createElement('button');button.type='button';button.className='song-choice';
+  const number=document.createElement('span');number.className='song-number';number.textContent=String(index+1).padStart(2,'0');
+  const meta=document.createElement('span');const title=document.createElement('strong');title.textContent=track.title;
+  const artist=document.createElement('small');artist.textContent=track.artist;meta.append(title,artist);
+  const action=document.createElement('span');action.className='song-action';action.textContent='▷';
+  button.append(number,meta,action);button.addEventListener('click',()=>{setMusicOpen(true);chooseTrack(index,true);});return button;
+});
+$('songList').replaceChildren(...songButtons);
+$('openPlayer').addEventListener('click',()=>setMusicOpen(true));
+function updateTrack(){
+  const track=tracks[trackIndex];$('trackTitle').textContent=track.title;$('trackArtist').textContent=track.artist;
+  $('musicExternal').href='https://music.youtube.com/watch?v='+track.id;
+  songButtons.forEach((button,index)=>button.setAttribute('aria-current',String(index===trackIndex)));
+}
+function playButton(playing){$('musicPlay').textContent=playing?'Ⅱ':'▶';$('musicPlay').setAttribute('aria-label',playing?'พักเพลง':'เล่นเพลง');}
+function setMusicOpen(open){
+  $('musicDevice').hidden=!open;$('musicToggle').hidden=open||$('anniversaryPage').hidden;
+  $('musicToggle').setAttribute('aria-expanded',String(open));document.body.classList.toggle('music-open',open);
+  if(!open){wantsPlayback=false;if(youtubeReady)youtube.pauseVideo();playButton(false);}
+  if(!$('diaryPanel').hidden)sizeBook();
+}
+function ensureYoutube(){
+  if(location.protocol==='file:'){
+    wantsPlayback=false;playButton(false);$('localMusicLink').hidden=false;
+    $('musicStatus').textContent='เปิดเว็บผ่านลิงก์ด้านล่างก่อน เพื่อเล่นเพลงในสมุด';return;
+  }
+  if(youtubeReady||apiLoading)return;
+  apiLoading=true;$('musicStatus').textContent='กำลังเตรียมเครื่องเล่น…';
+  if(window.YT&&window.YT.Player){window.onYouTubeIframeAPIReady();return;}
+  let script=$('youtubeApi');
+  if(!script){script=document.createElement('script');script.id='youtubeApi';script.src='https://www.youtube.com/iframe_api';
+    script.onerror=()=>{apiLoading=false;script.remove();$('musicStatus').textContent='โหลดเครื่องเล่นไม่ได้ ลองกดเล่นอีกครั้งหรือเปิดใน YouTube Music';};document.head.appendChild(script);}
+  clearTimeout(apiTimeout);apiTimeout=setTimeout(()=>{if(!youtubeReady){apiLoading=false;$('musicStatus').textContent='เครื่องเล่นยังไม่พร้อม ลองกดเล่นอีกครั้ง หรือเปิดใน YouTube Music';}},15000);
+}
+window.onYouTubeIframeAPIReady=function(){
+  if(youtube)return;
+  youtube=new window.YT.Player('youtubePlayer',{
+    width:'100%',height:'208',videoId:tracks[trackIndex].id,
+    playerVars:{playsinline:1,controls:1,rel:0,origin:location.origin},
+    events:{
+      onReady:event=>{
+        clearTimeout(apiTimeout);apiLoading=false;youtubeReady=true;event.target.setVolume(Number($('musicVolume').value));
+        event.target.getIframe().setAttribute('title','เพลงในสมุด — YouTube');
+        if(wantsPlayback&&!$('musicDevice').hidden)event.target.loadVideoById(tracks[trackIndex].id);else event.target.cueVideoById(tracks[trackIndex].id);
+        $('musicStatus').textContent='พร้อมแล้ว กดเล่นเพื่อฟังเพลง';
+        clearInterval(clockTimer);clockTimer=setInterval(updateMusicClock,500);
+      },
+      onStateChange:event=>{
+        if(event.data===1&&$('musicDevice').hidden){youtube.pauseVideo();return;}
+        playButton(event.data===1);
+        if(event.data===1)$('musicStatus').textContent='กำลังเล่น · '+(trackIndex+1)+' / '+tracks.length;
+        if(event.data===2)$('musicStatus').textContent='พักเพลงไว้ก่อน';
+        if(event.data===3)$('musicStatus').textContent='กำลังโหลดเพลง…';
+        if(event.data===0&&!$('musicDevice').hidden)chooseTrack(trackIndex+1,true);
+        updateMusicClock();
+      },
+      onError:event=>{
+        wantsPlayback=false;playButton(false);
+        $('musicStatus').textContent=event.data===153?'เล่นบนหน้านี้ไม่ได้ ลองเปิดเว็บผ่านลิงก์ในเครื่อง หรือเปิดใน YouTube Music':([101,150].includes(event.data)?'เพลงนี้ไม่อนุญาตให้เล่นในเว็บ กดข้ามหรือเปิดใน YouTube Music ได้เลย':'เพลงนี้เล่นไม่ได้ ลองข้ามเพลงหรือเปิดใน YouTube Music');
+      },
+      onAutoplayBlocked:()=>{playButton(false);$('musicStatus').textContent='กดเล่นบนวิดีโออีกครั้งเพื่อเริ่มฟังเพลง';}
+    }
+  });
+};
+function chooseTrack(index,play){
+  trackIndex=(index+tracks.length)%tracks.length;wantsPlayback=play;updateTrack();
+  $('musicSeek').value=0;$('musicTime').textContent='0:00';$('musicDuration').textContent='0:00';$('musicSeek').disabled=true;playButton(false);
+  if(youtubeReady){$('musicStatus').textContent=play?'กำลังโหลดเพลง…':'กดเล่นเพื่อฟังเพลง';if(play)youtube.loadVideoById(tracks[trackIndex].id);else youtube.cueVideoById(tracks[trackIndex].id);}else ensureYoutube();
+}
+function musicTime(seconds){seconds=Math.max(0,Math.floor(seconds||0));return Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0');}
+function updateMusicClock(){
+  if(!youtubeReady)return;
+  const duration=youtube.getDuration()||0,current=youtube.getCurrentTime()||0;
+  $('musicSeek').disabled=duration<=0;if(!seekDragging)$('musicSeek').value=duration?current/duration*100:0;
+  $('musicTime').textContent=musicTime(current);$('musicDuration').textContent=musicTime(duration);
+}
+$('musicToggle').addEventListener('click',()=>{setMusicOpen(true);ensureYoutube();});
+$('musicClose').addEventListener('click',()=>{setMusicOpen(false);$('musicToggle').focus();});
+$('musicPlay').addEventListener('click',()=>{
+  if(youtubeReady){if(youtube.getPlayerState()===1){wantsPlayback=false;youtube.pauseVideo();}else{wantsPlayback=true;youtube.playVideo();}}else{wantsPlayback=true;ensureYoutube();}
+});
+$('musicPrev').addEventListener('click',()=>chooseTrack(trackIndex-1,true));
+$('musicNext').addEventListener('click',()=>chooseTrack(trackIndex+1,true));
+$('musicVolume').addEventListener('input',event=>{if(youtubeReady)youtube.setVolume(Number(event.target.value));});
+$('musicSeek').addEventListener('input',()=>{seekDragging=true;});
+$('musicSeek').addEventListener('change',event=>{if(youtubeReady)youtube.seekTo(Number(event.target.value)/100*youtube.getDuration(),true);seekDragging=false;});
+updateTrack();
+const photos=Array.from({length:6},(_,i)=>'assets/photos/memory-'+(i+1)+'.png'); let photoIndex=0;
+function makePhoto(index,label,className='polaroid'){
+  const button=document.createElement('button');button.type='button';button.className=className;button.setAttribute('aria-label','เปิดรูป: '+label);
+  const image=document.createElement('img');image.src=photos[index];image.alt=label;image.loading='lazy';image.decoding='async';
+  button.append(image);button.addEventListener('click',()=>showPhoto(index));return button;
+}
+function showPhoto(index){photoIndex=index;$('slideImg').src=photos[index];$('slideImg').alt='รูปความทรงจำ '+(index+1);if(!$('photoModal').open)$('photoModal').showModal();}
+$('fileInput').addEventListener('change', event => {
+  const files=Array.from(event.target.files).filter(file=>file.type.startsWith('image/')).slice(0,12);
+  files.forEach(file => {
+    const index=photos.length; const src=URL.createObjectURL(file); photos.push(src);
+
+  });albumIndex=Math.floor((photos.length-1)/3)*3;renderAlbum();event.target.value='';
+});
+$('closePhoto').addEventListener('click',()=>$('photoModal').close());
+$('prevPhoto').addEventListener('click',()=>{if(photos.length)showPhoto((photoIndex-1+photos.length)%photos.length);});
+$('nextPhoto').addEventListener('click',()=>{if(photos.length)showPhoto((photoIndex+1)%photos.length);});
+$('photoModal').addEventListener('click',event=>{if(event.target===$('photoModal')){const rect=$('photoModal').getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)$('photoModal').close();}});
+document.addEventListener('keydown',event=>{if($('photoModal').open){if(event.key==='ArrowLeft')$('prevPhoto').click();if(event.key==='ArrowRight')$('nextPhoto').click();}});
+let albumIndex=0;
+function renderAlbum(){
+  ['albumLeft','albumRight'].forEach((id,side)=>{
+    const page=$(id);const start=albumIndex+side*2;
+    const pictures=photos.slice(start,start+(side===0?2:1)).map((_,offset)=>makePhoto(start+offset,'รูปความทรงจำ '+(start+offset+1)));
+    const heart=document.createElement('span');heart.className='sticker sticker-heart';heart.textContent=side?'♡':'♥';heart.setAttribute('aria-hidden','true');
+    const flower=document.createElement('span');flower.className='sticker sticker-flower';flower.textContent='❀';flower.setAttribute('aria-hidden','true');
+    const folio=document.createElement('span');folio.className='page-folio';folio.textContent=String(albumIndex/3*2+side+1).padStart(2,'0');
+    page.replaceChildren(...pictures,heart,flower,folio);
+  });
+  $('albumNumber').textContent=String(albumIndex/3+1).padStart(2,'0')+' / '+String(Math.ceil(photos.length/3)).padStart(2,'0');
+  $('albumPrev').disabled=albumIndex===0;$('albumNext').disabled=albumIndex+3>=photos.length;
+}
+$('albumPrev').addEventListener('click',()=>{if(albumIndex>0){albumIndex-=3;renderAlbum();}});
+$('albumNext').addEventListener('click',()=>{if(albumIndex+3<photos.length){albumIndex+=3;renderAlbum();}});
+renderAlbum();
+buildContents();renderEntry();
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="th">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ครบรอบ 1 ปี — รักของเรา</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --cream:#FFF8F3;
+            --soft:#F6EDE7;
+            --accent:#FFDCE6;
+            --muted:#BFA79A;
+            --text:#4B3A34;
+            --white:#ffffff;
+            --shadow: 0 8px 24px rgba(75,58,52,0.07);
+            --glass: rgba(255,255,255,0.6);
+        }
+        *{box-sizing:border-box}
+        [hidden]{display:none!important}
+        body{
+            margin:0; font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background:linear-gradient(180deg,var(--cream),#FFFDFB 60%);
+            color:var(--text);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            padding:36px 18px;
+        }
+        .wrap{max-width:980px;margin:0 auto;}
+        .login-screen{min-height:calc(100dvh - 72px);display:grid;place-items:center;padding:20px 0}
+        .login-card{width:100%;max-width:440px;padding:38px 28px;border:1px solid #F2DFDF;border-radius:24px;background:rgba(255,255,255,.9);box-shadow:0 18px 60px rgba(122,74,87,.09);text-align:center}
+        .login-heart{width:76px;height:76px;display:grid;place-items:center;margin:0 auto 24px;border-radius:24px;background:linear-gradient(135deg,#FFDCE6,#FFF1EB);color:#BA5676;font-size:36px}
+        .login-caption{font-size:12px;letter-spacing:3px;color:#946C76;margin:0 0 12px}
+        .login-card h1{font-size:30px;line-height:1.4}
+        .login-intro{color:#8D736C;line-height:1.8;margin:12px 0 28px}
+        .login-form{text-align:left}
+        .login-form label{display:block;font-weight:700;margin-bottom:9px}
+        .password-field{display:flex;align-items:center;border:1px solid #DDC5C8;border-radius:12px;background:#FFFCFA;overflow:hidden}
+        .password-field:focus-within{outline:3px solid #FFDCE6;border-color:#B7607C}
+        .password-field input{min-width:0;width:100%;padding:14px 12px;border:0;outline:none;background:transparent;color:var(--text);font:inherit;font-size:16px}
+        .password-toggle{flex-shrink:0;padding:12px;border:0;background:transparent;color:#8F4A62;font:inherit;cursor:pointer}
+        .login-error{min-height:24px;margin:9px 0 12px;color:#AE3456;font-size:14px;line-height:1.6}
+        .login-submit{width:100%;padding:14px;font:inherit;font-weight:700}
+        .login-note{font-size:13px;color:#8D736C;margin:24px 0 0;line-height:1.8}
+        .logout-row{display:flex;justify-content:flex-end;margin-bottom:16px}
+        button:focus-visible,a:focus-visible{outline:3px solid #B7607C;outline-offset:4px}
+        header{
+            display:flex;gap:16px;align-items:center;margin-bottom:22px;
+        }
+        .logo{
+            width:78px;height:78px;border-radius:16px;background:linear-gradient(135deg,var(--accent),#FFF1EB);
+            box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;
+            font-weight:700;color:#7A4A57;font-size:18px;
+        }
+        h1{margin:0;font-size:28px;line-height:1.05}
+        p.lead{margin:6px 0 0;color:var(--muted)}
+        .hero{
+            margin-top:12px;background:linear-gradient(180deg,var(--white),var(--glass));
+            border-radius:18px;padding:20px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:center;
+        }
+        .hero .left{flex:1}
+        .date{font-weight:700;color:#8F5B66}
+        .heart{
+            width:120px;height:120px;border-radius:14px;background:linear-gradient(135deg,#FFEFF2,#FFF2EE);
+            display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(255,148,168,0.12);
+            position:relative;overflow:visible;
+        }
+        .heart svg{width:72px;height:72px;filter:drop-shadow(0 6px 18px rgba(255,120,149,0.12))}
+        /* sections */
+        section{margin-top:22px}
+        .card{background:var(--white);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+        .two-col{display:grid;grid-template-columns:1fr 320px;gap:18px}
+        /* timeline */
+        .timeline{display:flex;flex-direction:column;gap:12px}
+        .event{padding:12px;border-radius:12px;background:linear-gradient(180deg,#FFFDFD,var(--soft));border:1px solid rgba(200,180,170,0.12)}
+        .event small{color:var(--muted)}
+        /* playlist */
+        .playlist ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+        .song{display:flex;align-items:center;gap:12px}
+        .song .cover{width:56px;height:56;border-radius:10px;background:linear-gradient(135deg,#FFDCE6,#FFF1EB);display:flex;align-items:center;justify-content:center;font-weight:700;color:#8A4A55}
+        .song .meta{flex:1}
+        .btn{
+            background:linear-gradient(90deg,#FF9AB3,#FFCDD6);border:0;padding:8px 12px;border-radius:10px;color:#5B2F3A;font-weight:700;cursor:pointer;
+            box-shadow:0 6px 18px rgba(255,142,165,0.12);
+        }
+        /* gallery */
+        .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+        .gallery-grid img{width:100%;height:120px;object-fit:cover;border-radius:10px;cursor:pointer}
+        .controls{display:flex;gap:8px;align-items:center}
+        input[type="file"]{display:none}
+        .upload-label{cursor:pointer;background:linear-gradient(90deg,#FFF1EB,#FFF8F6);padding:8px 12px;border-radius:10px;border:1px dashed rgba(150,120,110,0.12);font-weight:600}
+        /* modal */
+        .modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
+        .modal.active{display:flex}
+        .modal .slide{max-width:920px;width:100%;background:var(--white);border-radius:12px;padding:14px}
+        .slide img{width:100%;height:60vh;object-fit:contain;border-radius:10px}
+        .slide .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+        .nav-btn{background:var(--accent);border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+        /* messages */
+        .messages{display:flex;flex-direction:column;gap:8px}
+        .msg{padding:12px;border-radius:12px;background:linear-gradient(90deg,#FFF8F6,#FFF1F2);border:1px solid rgba(200,150,150,0.06)}
+        .msg p{margin:0}
+        .msg small{color:var(--muted)}
+        /* responsive */
+        @media (max-width:880px){
+            .two-col{grid-template-columns:1fr}
+            .gallery-grid{grid-template-columns:repeat(2,1fr)}
+            .hero{flex-direction:column;align-items:flex-start}
+        }
+    </style>
+</head>
+<body>
+    <main id="loginScreen" class="login-screen">
+        <div class="login-card">
+            <div class="login-heart" aria-hidden="true">♡</div>
+            <p class="login-caption">OUR FIRST ANNIVERSARY</p>
+            <h1>มีความทรงจำรอเธออยู่</h1>
+            <p class="login-intro">หน้าเล็ก ๆ ที่ตั้งใจทำให้เธอ<br>ใส่รหัสผ่าน แล้วเปิดดูไปด้วยกันนะ</p>
+            <form id="loginForm" class="login-form">
+                <label for="anniversaryPassword">รหัสผ่านของเรา</label>
+                <div class="password-field">
+                    <input id="anniversaryPassword" name="password" type="password" autocomplete="current-password" placeholder="ใส่รหัสผ่านที่นี่" required aria-describedby="loginError" spellcheck="false" autocapitalize="none">
+                    <button id="passwordToggle" class="password-toggle" type="button" aria-controls="anniversaryPassword" aria-pressed="false">แสดง</button>
+                </div>
+                <p id="loginError" class="login-error" role="status" aria-live="polite"></p>
+                <button type="submit" class="btn login-submit">เปิดความทรงจำ ♡</button>
+            </form>
+            <p class="login-note">เก็บหนึ่งปีของเราไว้ในหน้านี้</p>
+            <noscript><p class="login-error">กรุณาเปิด JavaScript ในเบราว์เซอร์เพื่อเข้าสู่เว็บ</p></noscript>
+        </div>
+    </main>
+    <main class="wrap" id="anniversaryPage" hidden>
+        <div class="logout-row"><button id="logoutButton" class="btn" type="button">กลับหน้าใส่รหัส</button></div>
+        <header>
+            <div class="logo">1 Year</div>
+            <div>
+                <h1 id="anniversaryTitle" tabindex="-1">ครบรอบ 1 ปี — รักของเรา</h1>
+                <p class="lead">มุมน่ารักหวานละมุน ให้เป็นหน้าเดียวเก็บความทรงจำและเพลงโปรดของเรา</p>
+            </div>
+        </header>
+
+        <div class="hero card">
+            <div class="left">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                    <div>
+                        <div class="date">1 ปี — 16 สิงหาคม 2025</div>
+                        <h2 style="margin:6px 0 0">ชื่อคุณ ❤️ ชื่อแฟน</h2>
+                        <p style="margin:8px 0 0;color:var(--muted)">ยังเหมือนเดิม...แต่ลึกซึ้งขึ้นทุกวัน</p>
+                    </div>
+                    <div style="text-align:right;color:var(--muted)"></div>
+                </div>
+                <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+                    <button class="btn" onclick="toggleMessages()">สุ่มข้อความหวาน</button>
+                    <a class="btn" href="#playlist" style="text-decoration:none">ดูเพลย์ลิสต์</a>
+                    <a class="btn" href="#photos" style="text-decoration:none">ดูรูปภาพ</a>
+                </div>
+            </div>
+            <div class="heart" aria-hidden>
+                <!-- heart svg -->
+                <svg viewBox="0 0 24 24" fill="#FF6B93" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21s-7.5-4.6-9.5-7.2C-0.1 9.3 4.5 4 8.2 6.1 9.9 7.3 12 9.4 12 9.4s2.1-2.1 3.8-3.3C19.5 4 25.1 9.3 21.5 13.8 19.5 16.4 12 21 12 21z"/>
+                </svg>
+            </div>
+        </div>
+
+        <section class="two-col">
+            <div>
+                <div class="card">
+                    <h3>เรื่องราวของเรา</h3>
+                    <div class="timeline" style="margin-top:12px">
+                        <div class="event">
+                            <small>วันแรกที่เจอ — 16/08/2024</small>
+                            <div style="font-weight:700;margin-top:6px">เจอกันครั้งแรกที่ร้านกาแฟ <span style="color:#8F5B66">☕️</span></div>
+                            <p style="margin:8px 0 0;color:var(--muted)">ตั้งแต่นั้นมาทุกวันก็อุ่นขึ้น มีทั้งหัวเราะและความทรงจำเล็ก ๆ น้อย ๆ</p>
+                        </div>
+                        <div class="event">
+                            <small>ทริปแรกด้วยกัน — 12/10/2024</small>
+                            <div style="font-weight:700;margin-top:6px">ไปทะเลด้วยกัน <span>🏖️</span></div>
+                            <p style="margin:8px 0 0;color:var(--muted)">ภาพถ่ายที่รักที่สุด เก็บไว้ดูทุกเวลา</p>
+                        </div>
+                        <div class="event">
+                            <small>ครบรอบ 6 เดือน — 16/02/2025</small>
+                            <div style="font-weight:700;margin-top:6px">ทำเซอร์ไพรส์เล็ก ๆ</div>
+                            <p style="margin:8px 0 0;color:var(--muted)">คำพูดที่ทำให้รู้สึกอบอุ่นที่สุด</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="playlist" class="card" style="margin-top:18px">
+                    <h3>เพลย์ลิสต์เรา</h3>
+                    <p style="color:var(--muted);margin-top:6px">เพลงหวาน ๆ ที่เราชอบ (กด "ค้นหา" เพื่อฟังตัวอย่างบน YouTube)</p>
+                    <div class="playlist" style="margin-top:12px">
+                        <ul>
+                            <li class="song">
+                                <div class="cover">1</div>
+                                <div class="meta">
+                                    <div style="font-weight:700">เพลงรักอบอุ่น</div>
+                                    <small style="color:var(--muted)">ศิลปินที่คุณชอบ</small>
+                                </div>
+                                <button class="btn" onclick="searchSong('เพลงรักอบอุ่น ศิลปินที่คุณชอบ')">ค้นหา</button>
+                            </li>
+
+                            <li class="song">
+                                <div class="cover">2</div>
+                                <div class="meta">
+                                    <div style="font-weight:700">A Thousand Years</div>
+                                    <small style="color:var(--muted)">Christina Perri</small>
+                                </div>
+                                <button class="btn" onclick="searchSong('A Thousand Years Christina Perri')">ค้นหา</button>
+                            </li>
+
+                            <li class="song">
+                                <div class="cover">3</div>
+                                <div class="meta">
+                                    <div style="font-weight:700">คิดถึงทุกครั้งที่มีฝน</div>
+                                    <small style="color:var(--muted)">ศิลปินไทย</small>
+                                </div>
+                                <button class="btn" onclick="searchSong('คิดถึงทุกครั้งที่มีฝน เพลง')">ค้นหา</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:18px">
+                    <h3>ข้อความหวาน ๆ</h3>
+                    <p style="color:var(--muted);margin-top:6px">เก็บเป็นข้อคิดสั้น ๆ สำหรับวันพิเศษ</p>
+                    <div id="messages" class="messages" style="margin-top:10px">
+                        <!-- messages populated by JS -->
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:10px">
+                        <button class="btn" onclick="prevMessage()">ก่อนหน้า</button>
+                        <button class="btn" onclick="nextMessage()">ถัดไป</button>
+                        <button class="btn" onclick="randomMessage()">สุ่ม</button>
+                    </div>
+                </div>
+            </div>
+
+            <aside>
+                <div class="card" id="photos">
+                    <h3>อัลบั้มรูป</h3>
+                    <p style="color:var(--muted);margin-top:6px">เพิ่มรูปใหม่ได้ และคลิกดูเต็มจอ</p>
+                    <div style="margin-top:10px" class="controls">
+                        <label class="upload-label">
+                            อัปโหลดรูป
+                            <input type="file" id="fileInput" accept="image/*" multiple>
+                        </label>
+                        <button class="btn" onclick="addSample()">เพิ่มรูปตัวอย่าง</button>
+                    </div>
+
+                    <div class="gallery-grid" style="margin-top:12px" id="gallery">
+                        <!-- images -->
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:18px">
+                    <h3>อัลบั้มพิเศษ</h3>
+                    <p style="color:var(--muted);margin-top:6px">คอลเลกชันที่คัดมาแล้ว</p>
+                    <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
+                        <div style="width:84px;height:84px;border-radius:12px;overflow:hidden">
+                            <img src="https://picsum.photos/seed/album1/400/400" style="width:100%;height:100%;object-fit:cover" alt="cover">
+                        </div>
+                        <div>
+                            <div style="font-weight:700">ทริปทะเล</div>
+                            <small style="color:var(--muted)">รูปประทับใจ 24 ภาพ</small>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <!-- modal for slideshow -->
+        <div id="modal" class="modal" onclick="closeModal(event)">
+            <div class="slide card" id="slideBox" onclick="event.stopPropagation()">
+                <img id="slideImg" src="" alt="photo">
+                <div class="meta">
+                    <div id="slideIdx" style="color:var(--muted)">1 / 1</div>
+                    <div style="display:flex;gap:8px">
+                        <button class="nav-btn" onclick="prevSlide()">⟨ ก่อน</button>
+                        <button class="nav-btn" onclick="nextSlide()">ถัดไป ⟩</button>
+                        <button class="nav-btn" onclick="closeModal()">ปิด ✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // This static-page gate is for the anniversary experience, not server authentication.
+        const loginScreen = document.getElementById('loginScreen');
+        const anniversaryPage = document.getElementById('anniversaryPage');
+        const loginForm = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('anniversaryPassword');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const loginError = document.getElementById('loginError');
+        let anniversaryInitialized = false;
+
+        passwordToggle.addEventListener('click', () => {
+            const show = passwordInput.type === 'password';
+            passwordInput.type = show ? 'text' : 'password';
+            passwordToggle.textContent = show ? 'ซ่อน' : 'แสดง';
+            passwordToggle.setAttribute('aria-pressed', String(show));
+        });
+        passwordInput.addEventListener('input', () => {
+            loginError.textContent = '';
+            passwordInput.removeAttribute('aria-invalid');
+        });
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (passwordInput.value !== 'iloveu4ever15267') {
+                loginError.textContent = 'รหัสผ่านยังไม่ถูกต้อง ลองอีกครั้งนะ';
+                passwordInput.setAttribute('aria-invalid', 'true');
+                passwordInput.focus();
+                return;
+            }
+            loginForm.reset();
+            passwordInput.type = 'password';
+            passwordToggle.textContent = 'แสดง';
+            passwordToggle.setAttribute('aria-pressed', 'false');
+            loginError.textContent = '';
+            passwordInput.removeAttribute('aria-invalid');
+            loginScreen.hidden = true;
+            anniversaryPage.hidden = false;
+            if (!anniversaryInitialized) {
+                for (let i = 0; i < 6; i++) addSample();
+                renderMessage();
+                anniversaryInitialized = true;
+            }
+            window.scrollTo({top: 0, behavior: 'instant'});
+            document.getElementById('anniversaryTitle').focus({preventScroll: true});
+        });
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            closeModal();
+            anniversaryPage.hidden = true;
+            loginScreen.hidden = false;
+            window.scrollTo({top: 0, behavior: 'instant'});
+            passwordInput.focus({preventScroll: true});
+        });
+
+        // ข้อความหวานตัวอย่าง
+        const messagesList = [
+            "ยังคงยิ้มได้เพราะมีเธออยู่ข้าง ๆ",
+            "ทุกวันกับเธอเหมือนเพลงที่เพราะไม่รู้จบ",
+            "ขอเดินด้วยกันแบบนี้ไปนาน ๆ นะ",
+            "ขอบคุณสำหรับทุกโมเมนต์เล็ก ๆ ที่ทำให้ใหญ่ขึ้น",
+            "เป็นที่พักพิงที่ดีที่สุดในวันที่เหนื่อยล้า"
+        ];
+        let msgIndex = 0;
+        const messagesEl = document.getElementById('messages');
+
+        function renderMessage(){
+            messagesEl.innerHTML = '';
+            const m = messagesList[msgIndex];
+            const div = document.createElement('div');
+            div.className = 'msg';
+            div.innerHTML = `<p>${m}</p><small>จากใจของเรา</small>`;
+            messagesEl.appendChild(div);
+        }
+        function nextMessage(){ msgIndex = (msgIndex+1) % messagesList.length; renderMessage(); }
+        function prevMessage(){ msgIndex = (msgIndex-1 + messagesList.length) % messagesList.length; renderMessage(); }
+        function randomMessage(){ msgIndex = Math.floor(Math.random()*messagesList.length); renderMessage(); }
+        function toggleMessages(){ randomMessage(); window.scrollTo({top: document.getElementById('messages').offsetTop-80, behavior:'smooth'}); }
+
+        // playlist search (เปิด YouTube ค้นหา)
+        function searchSong(q){
+            const url = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+            window.open(url, '_blank');
+        }
+
+        // gallery logic
+        const gallery = document.getElementById('gallery');
+        let photos = []; // {src}
+        let current = 0;
+
+        function addSample(){
+            // เพิ่มรูปตัวอย่างจาก picsum
+            const seed = Math.floor(Math.random()*1000);
+            const src = `https://picsum.photos/seed/${Date.now()+seed}/800/600`;
+            photos.push({src});
+            renderGallery();
+        }
+
+        function renderGallery(){
+            gallery.innerHTML = '';
+            photos.forEach((p,i)=>{
+                const img = document.createElement('img');
+                img.src = p.src;
+                img.alt = 'photo'+i;
+                img.dataset.index = i;
+                img.onclick = ()=> openModal(i);
+                gallery.appendChild(img);
+            });
+        }
+
+        // upload
+        const fileInput = document.getElementById('fileInput');
+        fileInput.addEventListener('change', (e)=>{
+            const files = Array.from(e.target.files).slice(0,12);
+            files.forEach(f=>{
+                const reader = new FileReader();
+                reader.onload = ev=>{
+                    photos.push({src: ev.target.result});
+                    renderGallery();
+                };
+                reader.readAsDataURL(f);
+            });
+            fileInput.value = '';
+        });
+
+        // modal slideshow
+        const modal = document.getElementById('modal');
+        const slideImg = document.getElementById('slideImg');
+        const slideIdx = document.getElementById('slideIdx');
+
+        function openModal(i){
+            current = i;
+            updateSlide();
+            modal.classList.add('active');
+        }
+        function closeModal(e){
+            if(e && e.target && e.target.id === 'modal') modal.classList.remove('active');
+            else if(!e) modal.classList.remove('active');
+        }
+        function updateSlide(){
+            if(photos.length===0) return;
+            slideImg.src = photos[current].src;
+            slideIdx.textContent = (current+1) + ' / ' + photos.length;
+        }
+        function nextSlide(){ if(photos.length===0) return; current = (current+1)%photos.length; updateSlide(); }
+        function prevSlide(){ if(photos.length===0) return; current = (current-1+photos.length)%photos.length; updateSlide(); }
+
+        // Initialize the anniversary content after a successful login.
+
+        // small accessibility: close modal with ESC
+        document.addEventListener('keydown', (e)=>{
+            if(e.key === 'Escape') closeModal();
+            if(e.key === 'ArrowRight') nextSlide();
+            if(e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>
